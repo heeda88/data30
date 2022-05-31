@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',path='css/home.css')}}"
+{% endblock css %}
+
+
+{% block content %}
+<div class="container">
+	{%if errors %}{{errors}} {%else%} {{email}} {%endif%}
+</div>
+{% endblock content %}
+

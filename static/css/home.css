@@ -1,0 +1,16 @@
+html,
+body {
+  height: 100%;
+}
+
+.container {
+  margin: 0px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+

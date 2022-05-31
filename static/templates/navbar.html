@@ -1,0 +1,38 @@
+
+<nav class="navbar navbar-expand-lg bg-light rounded" aria-label="Eleventh navbar example">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home">30번 학습데이터</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample09">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">메인화면</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/item1">30-1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/item2">30-2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled">관리자</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-bs-toggle="dropdown" aria-expanded="false">{% if email %} {{email}} {% else %} 로그인 {% endif %}</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown09">
+            <li><a class="dropdown-item" href="/">로그인 페이지</a></li>
+            <li><a class="dropdown-item" href="/myinfo">상세정보 페이지</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">로그아웃</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form role="search">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+    </div>
+  </div>
+</nav>

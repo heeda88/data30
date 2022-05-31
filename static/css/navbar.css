@@ -1,0 +1,15 @@
+
+.navbar {
+  padding-right: 5%;
+  padding-left: 5%;
+  margin-bottom: 0px;
+  border-bottom: 1px solid;
+  border-color: #cecece;
+}
+
+.navbar a {
+  color: #000000;
+  background-color: transparent;
+  text-decoration: none;
+}
+
