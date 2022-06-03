@@ -7,7 +7,23 @@
 
 {% block content %}
 
+
 <div class='container'>
+  <div class='info'>
+
+    {% if data['errors']%}
+        <div class="alert alert-danger" role="alert">
+          {{data['errors'][0]}}
+        </div>
+    {% endif %}
+
+    {% if data['msg']%}
+      <div class="alert alert-success" role="alert">
+        {{data['msg'][0]}}
+      </div>
+    {% endif %}
+
+  </div>
   <main class="form-signin w-100 m-auto">
     <form method="POST" action='/login'>
       <h1 class="h3 mb-3 fw-normal">로그인</h1>

@@ -9,20 +9,31 @@ from jose import jwt
 router=APIRouter()
 templates= Jinja2Templates(directory="static/templates")
 
-class  fakeDB:
-	def __init__(self):
-		self.email="example@example.com"
-		self.password="example"
 
-settings=fakeDB()
+fake_db={'admin':{'email':'admin@namu.com','password':'namu02110','name':'관리자','role':'admin'
+}}
 
+
+
+def auth_token(request: Request):
+	data ={}
+	if 	'access_token' in request._cookies.keys() :
+		token=request._cookies['access_token']
+		data=jwt.decode(token,key="sort", algorithms='HS256')
+		return data
+	else :
+		return data
+
+def logout(request:Request):
+	data ={}
+	response = templates.TemplateResponse("login.html", {"request": request, "data":data})
+	response.delete_cookie('access_token')
+	return response
 
 @router.get("/login")
 async def login(request:Request):
-	token=request._cookies['access_token']
-	errors=[]
-	data=jwt.decode(token,key="sort", algorithms='HS256')
-	return templates.TemplateResponse(name="login.html",context={"request":request, "errors":errors, "email":data['email']})
+	data=auth_token(request)
+	return templates.TemplateResponse(name="login.html",context={"request":request,"data":data})
 
 @router.post("/login")
 async def login(response:Response, request:Request):
@@ -44,32 +55,40 @@ async def login(response:Response, request:Request):
 	# get password
 	password=form.get("password")
 
+	# session 호출 
+
 	# email 입력 예외처리 입력값없음
 	if not email:
 		errors.append("Please enter valid email")
 
 	# password 입력 예외처리
-	if len(password)<=6:
+	if len(password)<=4:
 		errors.append("please enter valid password")
 
 	# verify email
-	if email!=settings.email:
-		auth=False
-
+	if email!=fake_db['admin']['email']:
+		errors.append("check your email & password")
 	# verify email
-	if password!=settings.password:
-		auth=False
+	if password!=fake_db['admin']['password']:
+		errors.append("check your email & password")
 
-	if auth:
-		data['email']=email
+	if len(errors)==0:
+		msg.append("Login successfully")
+		data['email']=fake_db['admin']['email']
+		data['name']=fake_db['admin']['name']
+		data['role']=fake_db['admin']['role']	
+		data['msg']=msg
+
 		jwt_token= jwt.encode(claims=data,key="sort", algorithm='HS256')
 		access_token=jwt_token
-		print(access_token)
-		response=templates.TemplateResponse(name="login.html",context={"request":request, "msg":msg, "email":email})
+		response=templates.TemplateResponse(name="login.html",context={"request":request,"data":data})
 		response.set_cookie(key="access_token", value=f"{access_token}", httponly=True)
 		return response
 	else :
 		errors.append('login_failed')
-		return templates.TemplateResponse(name="login.html",context={"request":request, "errors":errors})
+		data['errors']=errors
+		return templates.TemplateResponse(name="login.html",context={"request":request, "data":data})
 
-
+@router.get("/logout")
+def delete_cookie(request: Request):
+	return logout(request=request)
